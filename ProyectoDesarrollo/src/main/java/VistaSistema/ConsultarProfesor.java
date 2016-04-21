@@ -5,8 +5,8 @@
  */
 package VistaSistema;
 
-import ControladorSistema.PersistenciaDoctor;
-import ModeloSistema.Doctor;
+import ControladorSistema.PersistenciaProfesor;
+import ModeloSistema.Profesor;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,12 +16,9 @@ import javax.swing.ImageIcon;
  *
  * @author root
  */
-public class ConsultarDoctores extends javax.swing.JFrame {
+public class ConsultarProfesor extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ConsultarDoctores
-     */
-    public ConsultarDoctores() {
+      public ConsultarProfesor() {
         initComponents();
         Thread thread = new Thread(new Runnable() {
             Integer i=0;
@@ -33,7 +30,7 @@ public class ConsultarDoctores extends javax.swing.JFrame {
                         if(i>=0){
                             labelImagenPerfilDoctorP.setText("");
                             
-                            labelImagenPerfilDoctorP.setIcon(new ImageIcon(PersistenciaDoctor.leerDoctor().get(i).getImagenPerfilDoctor().getImagen()));   
+                            labelImagenPerfilDoctorP.setIcon(new ImageIcon(PersistenciaProfesor.leerProfesor().get(i).getImagenPerfilProfesor().getImagen()));   
                         }    
                     }catch(Exception e ){if(i<=0)labelImagenPerfilDoctorP.setText("Selecciona una fila para ver su imagen de perfil");}
                     try {
@@ -74,7 +71,7 @@ public class ConsultarDoctores extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Consultar Doctores");
+        jButton1.setText("Consultar Profesores");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -130,7 +127,7 @@ public class ConsultarDoctores extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         try{
-            Integer tamano = PersistenciaDoctor.leerDoctor().size();
+            Integer tamano = PersistenciaProfesor.leerProfesor().size();
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     new Object[tamano] [4],
                     new String[]{
@@ -138,13 +135,13 @@ public class ConsultarDoctores extends javax.swing.JFrame {
                     }
             ));
             Integer indice =0;
-            for(Doctor d: PersistenciaDoctor.leerDoctor()){
-                jTable1.setValueAt(d.getAreasDoctor().getAreaPiso(), indice, 0);
-                jTable1.setValueAt(d.getAreasDoctor().getEspecialidadDoctor(), indice, 1);
+            for(Profesor d: PersistenciaProfesor.leerProfesor()){
+                jTable1.setValueAt(d.getMateria().getMateria(), indice, 0);
+                //jTable1.setValueAt(d.getMateria().getEspecialidadDoctor(), indice, 1);
                 jTable1.setValueAt(d.getNombre(), indice, 2);
                 jTable1.setValueAt(d.getPassword(), indice, 3);
                 jTable1.setValueAt(d.getNumeroEmpleado(), indice, 4);
-                jTable1.setValueAt(d.getAreasDoctor().getTurno(), indice, 5);
+                jTable1.setValueAt(d.getMateria().getTurno(), indice, 5);
                 indice +=1;
             }
         }catch(Exception e) {}

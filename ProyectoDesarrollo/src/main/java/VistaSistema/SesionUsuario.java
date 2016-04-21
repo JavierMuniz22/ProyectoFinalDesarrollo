@@ -5,11 +5,11 @@
  */
 package VistaSistema;
 
-import ControladorSistema.PersistenciaDoctor;
-import ControladorSistema.PersistenciaIntervension;
-import ControladorSistema.PersistenciaPaciente;
-import ModeloSistema.Intervensiones;
-import ModeloSistema.Paciente;
+import ControladorSistema.PersistenciaProfesor;
+import ControladorSistema.PersistenciaCalificacion;
+import ControladorSistema.PersistenciaAlumno;
+import ModeloSistema.Calificacion;
+import ModeloSistema.Alumno;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ public class SesionUsuario extends javax.swing.JFrame {
     public SesionUsuario(Integer id) throws IOException, FileNotFoundException, ClassNotFoundException {
         initComponents();
         this.id = id;
-        labelNombreDoctor.setText(PersistenciaDoctor.leerDoctor().get(id).getNombre());
-        labeEspecialidaDoctor.setText(PersistenciaDoctor.leerDoctor().get(id).getAreasDoctor().getEspecialidadDoctor());
-        labelImagenPerfil.setIcon(new ImageIcon(PersistenciaDoctor.leerDoctor().get(id).getImagenPerfilDoctor().getImagen()));
+        labelNombreDoctor.setText(PersistenciaProfesor.leerProfesor().get(id).getNombre());
+        //labeEspecialidaDoctor.setText(PersistenciaProfesor.leerProfesor().get(id).getMateria().getEspecialidador());
+        labelImagenPerfil.setIcon(new ImageIcon(PersistenciaProfesor.leerProfesor().get(id).getImagenPerfilProfesor().getImagen()));
     }
 
     /**
@@ -309,27 +309,27 @@ public class SesionUsuario extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try{
-            Integer generaId = PersistenciaPaciente.getIdPaciente();
+            Integer generaId = PersistenciaAlumno.getIdAlumno();
             
-            Paciente paciente = new Paciente();
+            Alumno alumno = new Alumno();
             
-            Intervensiones intervensiones = new Intervensiones();
-            paciente.setNombre(textNombrePaciente.getText());
-            paciente.setEdad(Integer.parseInt(textEdadPaciente.getText()));
-            paciente.setnSeguroSocial(Integer.parseInt(textNSSPaciente.getText()));
-            paciente.setFechaIngreso(textFechaIngreso.getText());
-            paciente.setIdDcotor(id);
-            paciente.setIdIntervension(PersistenciaPaciente.getIdPaciente());
+            Calificacion calificacion = new Calificacion();
+            alumno.setNombre(textNombrePaciente.getText());
+            alumno.setCuatri(Integer.parseInt(textEdadPaciente.getText()));
+            alumno.setCuenta(Integer.parseInt(textNSSPaciente.getText()));
+            alumno.setFecha(textFechaIngreso.getText());
+            alumno.setIdProfesor(id);
+            alumno.setIdCalificacion(PersistenciaAlumno.getIdAlumno());
 
-            intervensiones.setFecha(textFechaSintomaIngresoPaciente.getText());
-            intervensiones.setSintoma(textSintomaPaciente.getText());
-            intervensiones.setTratamineto(textTratamientoPaciente.getText());
-            intervensiones.setIdPaciente(PersistenciaPaciente.getIdPaciente());
-            paciente.setIntervensiones(intervensiones);
-            PersistenciaPaciente.guardarPaciente(paciente);
-            PersistenciaIntervension.guardarIntervensiones(intervensiones);
-            System.out.println("El nuevo ide para el paciente es " + generaId);
-            labelEstado.setText("Paciente registrado");
+            calificacion.setFecha(textFechaSintomaIngresoPaciente.getText());
+            calificacion.setMateria(textSintomaPaciente.getText());
+            calificacion.setTratamineto(textTratamientoPaciente.getText());
+            calificacion.setIdAlumno(PersistenciaAlumno.getIdAlumno());
+            alumno.setCalificacion(calificacion);
+            PersistenciaAlumno.guardarPaciente(alumno);
+            PersistenciaCalificacion.guardarCalificacion(calificacion);
+            System.out.println("El nuevo ide para el alumno es " + generaId);
+            labelEstado.setText("Alumno registrado");
             
         }catch(Exception e)    {
             System.out.println( e.getMessage());
@@ -344,7 +344,7 @@ public class SesionUsuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         try{
             Integer tamano=0;
-            for(Paciente p: PersistenciaPaciente.leerPaciente())if(id.equals(p.getIdDcotor())) tamano +=1;            
+            for(Alumno p: PersistenciaAlumno.leerAlumno())if(id.equals(p.getIdProfesor())) tamano +=1;            
             jTable1.setModel(new javax.swing.table.DefaultTableModel(
                 new Object [tamano][7],
                 new String [] {
@@ -353,15 +353,15 @@ public class SesionUsuario extends javax.swing.JFrame {
             ));
             Integer indice=0;
             //aqui se llena la tabla
-            for(Paciente p: PersistenciaPaciente.leerPaciente()){
-                if(id.equals(p.getIdDcotor())){
+            for(Alumno p: PersistenciaAlumno.leerAlumno()){
+                if(id.equals(p.getIdProfesor())){
                     jTable1.setValueAt(p.getNombre(), indice, 0);
-                    jTable1.setValueAt(p.getEdad(), indice, 1);
-                    jTable1.setValueAt(p.getnSeguroSocial(), indice, 2);
-                    jTable1.setValueAt(p.getFechaIngreso(), indice, 3);
-                    jTable1.setValueAt(p.getIntervensiones().getFecha(), indice, 4);
-                    jTable1.setValueAt(p.getIntervensiones().getSintoma(), indice, 5);
-                    jTable1.setValueAt(p.getIntervensiones().getTratamineto(), indice, 6);
+                    jTable1.setValueAt(p.getCuatri(), indice, 1);
+                    jTable1.setValueAt(p.getCuenta(), indice, 2);
+                    jTable1.setValueAt(p.getFecha(), indice, 3);
+                    jTable1.setValueAt(p.getCalificacion().getFecha(), indice, 4);
+                    jTable1.setValueAt(p.getCalificacion().getMateria(), indice, 5);
+                    jTable1.setValueAt(p.getCalificacion().getTratamineto(), indice, 6);
                     indice +=1;
                 }
             }
@@ -372,7 +372,7 @@ public class SesionUsuario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new InicioClinica().setVisible(true);
+        new InicioSistema().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

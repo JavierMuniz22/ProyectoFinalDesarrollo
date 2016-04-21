@@ -5,12 +5,12 @@
  */
 package VistaSistema;
 
-import ControladorSistema.PersistenciaDoctor;
-import ControladorSistema.PersistenciaImagenPerfilDoctor;
-import ControladorSistema.PersistenciaAreasDoctor;
-import ModeloSistema.AreasDoctor;
-import ModeloSistema.Doctor;
-import ModeloSistema.ImagenPerfilDoctor;
+import ControladorSistema.PersistenciaProfesor;
+import ControladorSistema.PersistenciaImagenPerfilProfesor;
+import ControladorSistema.PersistenciaMateria;
+import ModeloSistema.Materia;
+import ModeloSistema.Profesor;
+import ModeloSistema.ImagenPerfilProfesor;
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -27,12 +27,12 @@ import org.apache.commons.io.IOUtils;
  *
  * @author root
  */
-public class RegistroDoctor extends javax.swing.JFrame {
+public class RegistroProfesor extends javax.swing.JFrame {
     public byte[] imagen;
     /**
      * Creates new form RegistroDoctor
      */
-    public RegistroDoctor() {
+    public RegistroProfesor() {
         initComponents();
     }
 
@@ -207,29 +207,29 @@ public class RegistroDoctor extends javax.swing.JFrame {
         try{
             char[] p = textPasswordDoctor.getPassword();
             
-            Integer id= PersistenciaDoctor.generarId();
-            Doctor d = new Doctor();
-            ImagenPerfilDoctor imagenPerfilDoctor = new ImagenPerfilDoctor();
-            AreasDoctor areasDoctor = new AreasDoctor();
+            Integer id= PersistenciaProfesor.generarId();
+            Profesor d = new Profesor();
+            ImagenPerfilProfesor imagenPerfilProfesor = new ImagenPerfilProfesor();
+            Materia materia = new Materia();
             d.setNombre(textNombreDoctor.getText());
             d.setNumeroEmpleado(Integer.parseInt(textNEmpleado.getText()));
             d.setPassword(new String(p));
             System.out.println("El pass es " + d.getPassword());
             //----
-            areasDoctor.setAreaPiso(textEspecialidadDoctor.getSelectedIndex()+1);
-            areasDoctor.setEspecialidadDoctor((String) textEspecialidadDoctor.getSelectedItem());
-            areasDoctor.setIdDoctor(id);
-            areasDoctor.setTurno((String) comboTurnoDoctor.getSelectedItem());
+            materia.setMateria(textEspecialidadDoctor.getSelectedIndex()+1);
+            //materia.setEspecialidadDoctor((String) textEspecialidadDoctor.getSelectedItem());
+            materia.setIdProfesor(id);
+            materia.setTurno((String) comboTurnoDoctor.getSelectedItem());
             //----
-            imagenPerfilDoctor.setImagen(imagen);
-            imagenPerfilDoctor.setIdDoctor(id);
+            imagenPerfilProfesor.setImagen(imagen);
+            imagenPerfilProfesor.setIdProfesor(id);
             //----
-            d.setAreasDoctor(areasDoctor);
-            d.setImagenPerfilDoctor(imagenPerfilDoctor);
+            d.setMateria(materia);
+            d.setImagenPerfilProfesor(imagenPerfilProfesor);
             //--
-            PersistenciaDoctor.guardarDoctor(d);
-            PersistenciaAreasDoctor.guardarAreasDoctor(areasDoctor);
-            PersistenciaImagenPerfilDoctor.guardarImagenPerfilDoctor(imagenPerfilDoctor);
+            PersistenciaProfesor.guardarDoctor(d);
+            PersistenciaMateria.guardarAreasDoctor(materia);
+            PersistenciaImagenPerfilProfesor.guardarImagenPerfilDoctor(imagenPerfilProfesor);
             labelEstadoRegistroDoctor.setText("Doctor registrado");
         }catch(Exception e) {
                 System.out.println("El error fue en  " + e.getMessage());

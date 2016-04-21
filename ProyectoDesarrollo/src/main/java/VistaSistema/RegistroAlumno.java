@@ -9,12 +9,12 @@ package VistaSistema;
  *
  * @author root
  */
-public class RegistroPaciente extends javax.swing.JFrame {
+public class RegistroAlumno extends javax.swing.JFrame {
 
     /**
      * Creates new form RegistroPaciente
      */
-    public RegistroPaciente() {
+    public RegistroAlumno() {
         initComponents();
     }
 

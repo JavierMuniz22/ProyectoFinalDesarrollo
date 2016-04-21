@@ -5,9 +5,10 @@
  */
 package VistaSistema;
 
-import ControladorSistema.PersistenciaDoctor;
-import ModeloSistema.Doctor;
-
+import ControladorSistema.PersistenciaAlumno;
+import ControladorSistema.PersistenciaProfesor;
+import ModeloSistema.Profesor;
+import ModeloSistema.Alumno;
 
 /**
  *
@@ -38,6 +39,7 @@ public class InicioSesion extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         labelEstado = new javax.swing.JLabel();
         textContraseña = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,49 +54,54 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
 
-        labelEstado.setText("Sin estado");
-
         textContraseña.setText("jPasswordField1");
+
+        jLabel3.setText("Inicio de sesion");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 197, Short.MAX_VALUE)
+                .addComponent(labelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(192, 192, 192)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(textUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(jLabel2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1)
-                                    .addComponent(labelEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(textContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 72, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(52, 52, 52)
+                .addComponent(jLabel3)
+                .addGap(52, 52, 52)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(textUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(textContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
-                .addComponent(jButton1)
                 .addGap(39, 39, 39)
-                .addComponent(labelEstado)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(labelEstado))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -119,16 +126,28 @@ public class InicioSesion extends javax.swing.JFrame {
             char [] p = textContraseña.getPassword();
             String nombre = textUsuario.getText();
             String pass =new String(p);
-            for(Doctor d : PersistenciaDoctor.leerDoctor()){
-                System.out.println(d.getNombre() + d.getPassword());
-                if(nombre.equals("root") && pass.equals("root")){
+            
+             if(nombre.equals("root") && pass.equals("root")){
                     new SesionRoot().setVisible(true);
                     this.setVisible(false);
-                }else if(d.getNombre().equals(nombre) && d.getPassword().equals(pass)){
-                    new SesionUsuario(d.getIdDoctor()).setVisible(true);
-                    this.setVisible(false);
-                }else labelEstado.setText("Datos incorrectos");
-            }
+             }else if(nombre!= "root" && pass!="root"){
+                for(Profesor d : PersistenciaProfesor.leerProfesor()){               
+                    if(d.getNombre().equals(nombre) && d.getPassword().equals(pass)){
+                        new SesionUsuario(d.getIdProfesor()).setVisible(true);
+                        this.setVisible(false);
+                    }else{
+                          for(Alumno pa : PersistenciaAlumno.leerAlumno()){               
+                            if(pa.getNombre().equals(nombre) && pa.getCuenta().equals(pass)){
+                                System.out.println(pa.getNombre() + pa.getCuenta());
+                                new SesionAlumno(pa.getIdAlumno()).setVisible(true);
+                                this.setVisible(false);
+                    }else labelEstado.setText("Datos incorrectos 2 else");
+                        }
+                    }
+                }
+                
+            } 
+             
         } catch (Exception ex) {
             System.out.println("Error en " + ex.getMessage());
         }
@@ -140,6 +159,7 @@ public class InicioSesion extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelEstado;
     private javax.swing.JPasswordField textContraseña;

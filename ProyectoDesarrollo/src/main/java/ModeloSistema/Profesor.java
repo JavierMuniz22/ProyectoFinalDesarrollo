@@ -14,22 +14,22 @@ import java.util.ArrayList;
  *
  * @author root
  */
-public class Doctor implements Serializable{
-    private Integer idDoctor;
+public class Profesor implements Serializable{
+    private Integer idProfesor;
     private Integer numeroEmpleado;
     private String nombre;
     private String password;
-    private AreasDoctor areasDoctor;
-    private ImagenPerfilDoctor imagenPerfilDoctor;
+    private Materia materia;
+    private ImagenPerfilProfesor imagenPerfilProfesor;
     
     
     
-    public Integer getIdDoctor() {
-        return idDoctor;
+    public Integer getIdProfesor() {
+        return idProfesor;
     }
 
-    public void setIdDoctor(Integer idDoctor) {
-        this.idDoctor = idDoctor;
+    public void setIdProfesor(Integer idProfesor) {
+        this.idProfesor = idProfesor;
     }
 
     public Integer getNumeroEmpleado() {
@@ -49,12 +49,12 @@ public class Doctor implements Serializable{
     }
 
 
-    public AreasDoctor getAreasDoctor() {
-        return areasDoctor;
+    public Materia getMateria() {
+        return materia;
     }
 
-    public void setAreasDoctor(AreasDoctor areasDoctor) {
-        this.areasDoctor = areasDoctor;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
     public String getPassword() {
@@ -65,12 +65,12 @@ public class Doctor implements Serializable{
         this.password = password;
     }
 
-    public ImagenPerfilDoctor getImagenPerfilDoctor() {
-        return imagenPerfilDoctor;
+    public ImagenPerfilProfesor getImagenPerfilProfesor() {
+        return imagenPerfilProfesor;
     }
 
-    public void setImagenPerfilDoctor(ImagenPerfilDoctor imagenPerfilDoctor) {
-        this.imagenPerfilDoctor = imagenPerfilDoctor;
+    public void setImagenPerfilProfesor(ImagenPerfilProfesor imagenPerfilProfesor) {
+        this.imagenPerfilProfesor = imagenPerfilProfesor;
     }
     
     
